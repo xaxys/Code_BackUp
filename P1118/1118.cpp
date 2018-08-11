@@ -1,0 +1,42 @@
+#include <iostream>
+#include <stdlib.h>
+#include <string.h>
+using namespace std;
+int n,sum;
+int a[13][13],ans[13];
+bool f[13];
+void buildtriangle(int n){
+	a[1][1]=1;
+	a[2][1]=a[2][2]=1;
+	for (int i=3;i<=n;i++){
+		a[i][1]=a[i][i]=1;
+		for (int j=2;j<i;j++) a[i][j]=a[i-1][j-1]+a[i-1][j];
+	}
+	return;
+}
+void dfs(int depth,int add){
+	if (add>=sum){
+		if (depth==n+1 && add==sum){
+			for (int i=1;i<n;i++) cout<<ans[i]<<" ";
+			cout<<ans[n]<<endl;
+			exit(0);
+		}
+		else return;
+	}
+	if (depth==n+1) return;
+	for (int i=1;i<=n;i++){
+		if(!f[i]){
+			f[i]=1;
+			ans[depth]=i;
+			dfs(depth+1,add+a[n][depth]*i);
+			f[i]=0;
+		}
+	}
+}
+int main(){
+	memset(f,0,sizeof(f));
+	cin>>n>>sum;
+	buildtriangle(n);
+	dfs(1,0);
+	return 0;
+}
