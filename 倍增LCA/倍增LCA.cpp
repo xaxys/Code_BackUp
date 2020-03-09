@@ -1,4 +1,4 @@
-//位运算法看P3379
+//位锟斤拷锟姐法锟斤拷P3379
 #include<iostream>
 #include<algorithm>
 #include<cstring>
@@ -29,11 +29,7 @@ void dfs(int x) {
 }
 int lca(int a, int b) {
 	int ans = 0;
-	if (depth[a] > depth[b]) {
-		int tmp = a;
-		a = b;
-		b = tmp;
-	}
+	if (depth[a] > depth[b]) a ^= b ^= a ^= b;
 	for (int i = s; i >= 0; i--) {
 		if (depth[a] < depth[b] && depth[fa[b][i]] >= depth[a]) {
 			ans += dis[b][i];
